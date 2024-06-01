@@ -46,6 +46,7 @@ First generate public and private key pairs
 
 // const skBase64 = Buffer.from(sk).toString('base64'); converting buffer array values to Base64
 // console.log("Secret Key (Base64):", skBase64);
+
 // fs.writeFileSync('SK', skBase64, 'utf8'); writing and saving genrated key pairs to the files
 
 // const pkBase64 = Buffer.from(pk).toString('base64');

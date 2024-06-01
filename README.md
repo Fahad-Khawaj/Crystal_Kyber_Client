@@ -7,5 +7,5 @@ This repository contains the client-side implementation of the Kyber post-quantu
 # Purpose:
 To securely generate and manage public/private key pairs.
 
-![Client-Server Interaction](path/to/your/image.png)
+![Client-Server Interaction](Kyber_WorkFlow.png)
 The provided picture illustrates the interaction between the client-side and server-side implementations of Kyber. The client initiates the communication by generating key pairs and encrypting data, which is then securely transmitted to the server. The server receives the encrypted data, decrypts it, and processes the request, ensuring a secure end-to-end communication channel. This setup is designed to safeguard against potential threats posed by quantum computing advancements, ensuring long-term data security.

@@ -19,7 +19,12 @@ Using Node.js (v16.17.0):
 ```
 npm install crystals-kyber
 ```
-Import the module at the top of your js file.
+Import the module at the top of your index.js file.
+
+to run the code write in console 
+```
+node index.js
+```
 
 ```
 const kyber = require('crystals-kyber');

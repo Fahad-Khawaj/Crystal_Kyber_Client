@@ -73,7 +73,7 @@ console.time("Decryption");
 // Decrypt the received encapsulated key using the secret key from the file
 const ssReceived = kyber.Decrypt768(cReceived, skFromFile);
 console.timeEnd("Decryption");
-console.log("Shared Secret Received:", ssReceived);
+console.log("Shared Secret Received:", ssReceived); //display the shared secret key
 ```
 ## Further details about Kyber.
 Crystal Kyber [https://pq-crystals.org/kyber/]

@@ -15,7 +15,21 @@ The provided picture illustrates the interaction between the client-side and ser
 Instructions for setting up the server-side application.
 
 ## Usage
-Examples of how to use the server-side application.
+Using Node.js (v16.17.0):
+```
+npm install crystals-kyber
+```
+Import the module at the top of your js file.
 
+```
+const kyber = require('crystals-kyber');
+```
+To use in your code (768 can be replaced with 512 or 1024).
+```
+// To generate a public and private key pair (pk, sk)
+let pk_sk = kyber.KeyGen768();
+let pk = pk_sk[0];
+let sk = pk_sk[1];
+```
 ## Further details about Kyber
 Guidelines for contributing to the project.

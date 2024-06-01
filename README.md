@@ -31,5 +31,6 @@ let pk_sk = kyber.KeyGen768();
 let pk = pk_sk[0];
 let sk = pk_sk[1];
 ```
-## Further details about Kyber
-Guidelines for contributing to the project.
+## Further details about Kyber.
+Crystal Kyber [https://pq-crystals.org/kyber/]
+and this code was obtained from public repository of (Crystal Kyber) [https://github.com/antontutoveanu/crystals-kyber-javascript] 

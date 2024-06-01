@@ -31,6 +31,49 @@ let pk_sk = kyber.KeyGen768();
 let pk = pk_sk[0];
 let sk = pk_sk[1];
 ```
+
+First generate public and private key pairs 
+```
+// //Timing key generation
+// console.time("Key Generation");
+// let pk_sk = kyber.KeyGen768();
+
+// let pk = pk_sk[0];
+// let sk = pk_sk[1];
+// console.timeEnd("Key Generation"); to note the time of the key generation
+
+// console.log("Public key:",pk, "\nSecret Key:",sk); displaying the key values in buffer array
+
+// const skBase64 = Buffer.from(sk).toString('base64'); converting buffer array values to Base64
+// console.log("Secret Key (Base64):", skBase64);
+// fs.writeFileSync('SK', skBase64, 'utf8'); writing and saving genrated key pairs to the files
+
+// const pkBase64 = Buffer.from(pk).toString('base64');
+// console.log("\n\nPublic Key (Base64):", pkBase64);
+// fs.writeFileSync('PK', pkBase64, 'utf8');
+
+// console.log("Keys saved.");
+```
+After genrating key pairs comment out the key generations lines and continue with the further steps of decryption to decrypt the received C cipher (secret encapsulated symmetric Key)
+
+```
+// Read the Base64-encoded secret key from the file
+const skBase64FromFile = fs.readFileSync('SK', 'utf8');
+
+// Convert from Base64 to binary format
+const skFromFile = Uint8Array.from(Buffer.from(skBase64FromFile, 'base64'));
+
+// received the encapsulated key (c) in Base64 format from the sender
+const cBase64 = "paste the base 64 received from client";
+const cReceived = Uint8Array.from(Buffer.from(cBase64, 'base64'));
+
+// Timing decryption
+console.time("Decryption");
+// Decrypt the received encapsulated key using the secret key from the file
+const ssReceived = kyber.Decrypt768(cReceived, skFromFile);
+console.timeEnd("Decryption");
+console.log("Shared Secret Received:", ssReceived);
+```
 ## Further details about Kyber.
 Crystal Kyber [https://pq-crystals.org/kyber/]
 and this code was obtained from public repository of (Crystal Kyber) [https://github.com/antontutoveanu/crystals-kyber-javascript] 

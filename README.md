@@ -28,7 +28,9 @@ To use in your code (768 can be replaced with 512 or 1024).
 ```
 module.exports = {...require("./kyber512"), ...require("./kyber768"), ...require("./kyber1024")};  
 const kyber = require('crystals-kyber');   //importing modules
-
+```
+generate key pairs and measure the time of key generation
+```
 console.time("Total Execution Time");  //Calculating total execution time of program
 
 console.time("Key Generation");
@@ -41,21 +43,30 @@ console.timeEnd("Key Generation");     //calculating key generation time
 console.log("Public Key------------",pk,"-----------");
 
 console.log("\nSecret Key------------",sk,"-----------");
-
+```
+get the server side public key in base64 from and convert it into bufferarray
+```
 const pkReceivedBase64 = "Paste Public Key of Server side here in base64 form";    //paste the publick of the server side here in base 64 form
 
 const pkReceived = Uint8Array.from(Buffer.from(pkReceivedBase64, 'base64'));   //reading and converting the received base64 key into buffer array
 console.log("recivied key ---------",pkReceived);
-
+```
+Encrypt using the received public key of the server and note the execution time
+```
 console.time("Encryption");
 
 let c_ss = kyber.Encrypt768(pkReceived);    //encryption on using public key of the server
 let c = c_ss[0];
 console.timeEnd("Encryption");
-
+```
+display and convert the encrypted C (cipher containing the secret key) in base64 format to be easily send to the server
+```
 console.log("encapsulated key (cipher text) --------------",c);  //displaying the encrypted encapsulated C
 const cBase64 = Buffer.from(c).toString('base64');    //converting the C buffer array into base 64 values 
 console.log("Encapsulated Key (Base64) --------------", cBase64);  //Copy this base64 value and send (copy paste) it on the server side to be decrypted
+```
+display the generated secret 32 key.
+```
 let ss1 = c_ss[1];
 
 console.log("SS1-------",ss1); //displaying the original 32 byte symmetric key hidden inside the C to compare the values on server side after decryption.

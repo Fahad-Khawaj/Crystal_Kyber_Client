@@ -21,64 +21,51 @@ npm install crystals-kyber
 ```
 Import the module at the top of your index.js file.
 
-to run the code write in console 
-```
-node index.js
-```
-
 ```
 const kyber = require('crystals-kyber');
 ```
 To use in your code (768 can be replaced with 512 or 1024).
 ```
+module.exports = {...require("./kyber512"), ...require("./kyber768"), ...require("./kyber1024")};  
+const kyber = require('crystals-kyber');   //importing modules
+
+console.time("Total Execution Time");  //Calculating total execution time of program
+
+console.time("Key Generation");
 // To generate a public and private key pair (pk, sk)
 let pk_sk = kyber.KeyGen768();
+
 let pk = pk_sk[0];
 let sk = pk_sk[1];
+console.timeEnd("Key Generation");     //calculating key generation time
+console.log("Public Key------------",pk,"-----------");
+
+console.log("\nSecret Key------------",sk,"-----------");
+
+const pkReceivedBase64 = "Paste Public Key of Server side here in base64 form";    //paste the publick of the server side here in base 64 form
+
+const pkReceived = Uint8Array.from(Buffer.from(pkReceivedBase64, 'base64'));   //reading and converting the received base64 key into buffer array
+console.log("recivied key ---------",pkReceived);
+
+console.time("Encryption");
+
+let c_ss = kyber.Encrypt768(pkReceived);    //encryption on using public key of the server
+let c = c_ss[0];
+console.timeEnd("Encryption");
+
+console.log("encapsulated key (cipher text) --------------",c);  //displaying the encrypted encapsulated C
+const cBase64 = Buffer.from(c).toString('base64');    //converting the C buffer array into base 64 values 
+console.log("Encapsulated Key (Base64) --------------", cBase64);  //Copy this base64 value and send (copy paste) it on the server side to be decrypted
+let ss1 = c_ss[1];
+
+console.log("SS1-------",ss1); //displaying the original 32 byte symmetric key hidden inside the C to compare the values on server side after decryption.
+
+console.timeEnd("Total Execution Time");
 ```
 
-First generate public and private key pairs 
+to run the code write in console 
 ```
-// //Timing key generation
-// console.time("Key Generation");
-// let pk_sk = kyber.KeyGen768();
-
-// let pk = pk_sk[0];
-// let sk = pk_sk[1];
-// console.timeEnd("Key Generation"); to note the time of the key generation
-
-// console.log("Public key:",pk, "\nSecret Key:",sk); displaying the key values in buffer array
-
-// const skBase64 = Buffer.from(sk).toString('base64'); converting buffer array values to Base64
-// console.log("Secret Key (Base64):", skBase64);
-
-// fs.writeFileSync('SK', skBase64, 'utf8'); writing and saving genrated key pairs to the files
-
-// const pkBase64 = Buffer.from(pk).toString('base64');
-// console.log("\n\nPublic Key (Base64):", pkBase64);
-// fs.writeFileSync('PK', pkBase64, 'utf8');
-
-// console.log("Keys saved.");
-```
-After genrating key pairs comment out the key generations lines and continue with the further steps of decryption to decrypt the received C cipher (secret encapsulated symmetric Key)
-
-```
-// Read the Base64-encoded secret key from the file
-const skBase64FromFile = fs.readFileSync('SK', 'utf8');
-
-// Convert from Base64 to binary format
-const skFromFile = Uint8Array.from(Buffer.from(skBase64FromFile, 'base64'));
-
-// received the encapsulated key (c) in Base64 format from the sender
-const cBase64 = "paste the base 64 received from client";
-const cReceived = Uint8Array.from(Buffer.from(cBase64, 'base64'));
-
-// Timing decryption
-console.time("Decryption");
-// Decrypt the received encapsulated key using the secret key from the file
-const ssReceived = kyber.Decrypt768(cReceived, skFromFile);
-console.timeEnd("Decryption");
-console.log("Shared Secret Received:", ssReceived); //display the shared secret key
+node index.js
 ```
 ## Further details about Kyber.
 Crystal Kyber [https://pq-crystals.org/kyber/]
